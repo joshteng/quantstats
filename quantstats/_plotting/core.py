@@ -87,6 +87,7 @@ def plot_returns_bars(returns, benchmark=None,
     colors, _, _ = _get_colors(grayscale)
     df = _pd.DataFrame(index=returns.index, data={returns_label: returns})
     if isinstance(benchmark, _pd.Series):
+        benchmark = _utils.group_returns(benchmark, benchmark.index.year, True) # fixes `ValueError: Axis limits cannot be NaN or Inf` error when including benchmark to generate report
         df['Benchmark'] = benchmark[benchmark.index.isin(returns.index)]
         df = df[['Benchmark', returns_label]]
 
